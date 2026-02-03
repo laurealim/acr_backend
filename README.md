@@ -1,4 +1,120 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ACR Admin Portal (Backend)
+
+Laravel 12 backend for ACR React. Provides REST APIs, authentication (Sanctum), RBAC (Tyro), and the admin dashboard.
+
+## Tech Stack
+
+- Laravel 12
+- PHP 8.2+
+- MySQL 8+ (recommended)
+- Laravel Sanctum (API auth)
+- Tyro Dashboard + Tyro Login (RBAC + admin UI)
+- Vite + Tailwind (admin assets)
+
+## Requirements
+
+- PHP 8.2+
+- Composer
+- Node.js 18+ and npm
+- MySQL 8+ (or compatible)
+
+## Quick Start
+
+1) Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+2) Configure environment
+
+```bash
+copy .env.example .env
+php artisan key:generate
+```
+
+Update `.env` with your database and app URL settings:
+
+```dotenv
+APP_URL=http://localhost:8000
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=acr
+DB_USERNAME=root
+DB_PASSWORD=
+
+SANCTUM_STATEFUL_DOMAINS=localhost:5173,127.0.0.1:5173
+SESSION_DOMAIN=localhost
+```
+
+3) Run migrations & seed default roles/users
+
+```bash
+php artisan migrate
+php artisan db:seed --class=UserSeeder
+```
+
+4) Start the backend
+
+```bash
+php artisan serve
+```
+
+5) (Optional) Start Vite for admin assets
+
+```bash
+npm run dev
+```
+
+## Default Admin Panel
+
+- URL: http://localhost:8000/dashboard
+
+## Default Seeded Accounts
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | su_admin@example.com | laureal |
+| Admin | admin@example.com | password123 |
+| User | user@example.com | password123 |
+
+## API Notes
+
+- API routes are defined in `routes/api.php`.
+- Auth endpoints are handled in `app/Http/Controllers/Api/AuthController.php`.
+- The API base URL is typically: http://localhost:8000/api
+
+## Project Structure (Backend)
+
+```
+admin_portal/
+├── app/
+│   ├── Http/Controllers/Api/   # API controllers
+│   ├── Models/                 # Eloquent models
+│   └── Providers/              # App service providers
+├── config/                     # Laravel + Tyro config
+├── database/                   # Migrations & seeders
+├── routes/                     # api.php, web.php
+├── resources/                  # Views + front assets
+└── public/                     # Entry point
+```
+
+## Common Commands
+
+```bash
+php artisan migrate:fresh --seed
+php artisan queue:listen
+php artisan config:clear
+php artisan cache:clear
+```
+
+## Troubleshooting
+
+- If API auth fails, verify `SANCTUM_STATEFUL_DOMAINS` and `SESSION_DOMAIN`.
+- If dashboard assets don’t load, run `npm run dev` or `npm run build`.
+- Ensure DB credentials in `.env` match your local setup.<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
