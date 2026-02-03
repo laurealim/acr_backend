@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use HasinHayder\Tyro\Models\Role;
 use Exception;
 
 class UserController extends Controller
@@ -285,7 +286,11 @@ class UserController extends Controller
                 ]);
 
                 // Assign default user role
-                $user->assignRole('user');
+                $userRole = Role::firstOrCreate(
+                    ['slug' => 'user'],
+                    ['name' => 'User']
+                );
+                $user->assignRole($userRole);
 
                 // Create employee profile
                 $employeeData = $request->only([

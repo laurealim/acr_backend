@@ -15,6 +15,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
+use HasinHayder\Tyro\Models\Role;
 
 class AuthController extends Controller
 {
@@ -45,7 +46,11 @@ class AuthController extends Controller
                 ]);
 
                 // Assign default user role
-                $user->assignRole('user');
+                $userRole = Role::firstOrCreate(
+                    ['slug' => 'user'],
+                    ['name' => 'User']
+                );
+                $user->assignRole($userRole);
 
                 // Get or create default office (the root ministry/first office)
                 $defaultOffice = Office::whereIn('type', ['ministry', 'office'])
